@@ -11,9 +11,9 @@
 #include <unistd.h>
 
 static int NUM_THREADS = 1;
-static int NUM_KEYS = 1000000;
+static int NUM_KEYS = 25000000;
 static char* HOST = "127.0.0.1";
-static int PORT = 8673;
+static int PORT = 22022;
 static char *FILTER_NAME = "foobar%d";
 
 typedef struct {
@@ -34,8 +34,8 @@ int connect_fd(conn_info *info) {
 }
 
 int timediff(struct timeval *t1, struct timeval *t2) {
-    uint64_t micro1 = t1->tv_sec * 1000000 + t1->tv_usec;
-    uint64_t micro2= t2->tv_sec * 1000000 + t2->tv_usec;
+    uint64_t micro1 = t1->tv_sec * 25000000 + t1->tv_usec;
+    uint64_t micro2= t2->tv_sec * 25000000 + t2->tv_usec;
     return (micro2-micro1) / 1000;
 }
 
