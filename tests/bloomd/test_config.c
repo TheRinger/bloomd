@@ -13,12 +13,12 @@ START_TEST(test_config_get_default)
     bloom_config config;
     int res = config_from_filename(NULL, &config);
     fail_unless(res == 0);
-    fail_unless(config.tcp_port == 8673);
-    fail_unless(config.udp_port == 8674);
+    fail_unless(config.tcp_port == 22022);
+    fail_unless(config.udp_port == 22023);
     fail_unless(strcmp(config.data_dir, "/tmp/bloomd") == 0);
     fail_unless(strcmp(config.log_level, "DEBUG") == 0);
     fail_unless(config.syslog_log_level == LOG_DEBUG);
-    fail_unless(config.initial_capacity == 100000);
+    fail_unless(config.initial_capacity == 100000000);
     fail_unless(config.default_probability == 1e-4);
     fail_unless(config.scale_size == 4);
     fail_unless(config.probability_reduction == 0.9);
@@ -37,12 +37,12 @@ START_TEST(test_config_bad_file)
     fail_unless(res == -ENOENT);
 
     // Should get the defaults...
-    fail_unless(config.tcp_port == 8673);
-    fail_unless(config.udp_port == 8674);
+    fail_unless(config.tcp_port == 22022);
+    fail_unless(config.udp_port == 22023);
     fail_unless(strcmp(config.data_dir, "/tmp/bloomd") == 0);
     fail_unless(strcmp(config.log_level, "DEBUG") == 0);
     fail_unless(config.syslog_log_level == LOG_DEBUG);
-    fail_unless(config.initial_capacity == 100000);
+    fail_unless(config.initial_capacity == 1000000);
     fail_unless(config.default_probability == 1e-4);
     fail_unless(config.scale_size == 4);
     fail_unless(config.probability_reduction == 0.9);
@@ -65,12 +65,12 @@ START_TEST(test_config_empty_file)
     fail_unless(res == 0);
 
     // Should get the defaults...
-    fail_unless(config.tcp_port == 8673);
-    fail_unless(config.udp_port == 8674);
+    fail_unless(config.tcp_port == 22022);
+    fail_unless(config.udp_port == 22023);
     fail_unless(strcmp(config.data_dir, "/tmp/bloomd") == 0);
     fail_unless(strcmp(config.log_level, "DEBUG") == 0);
     fail_unless(config.syslog_log_level == LOG_DEBUG);
-    fail_unless(config.initial_capacity == 100000);
+    fail_unless(config.initial_capacity == 100000000);
     fail_unless(config.default_probability == 1e-4);
     fail_unless(config.scale_size == 4);
     fail_unless(config.probability_reduction == 0.9);
@@ -94,7 +94,7 @@ scale_size = 2\n\
 flush_interval = 120\n\
 cold_interval = 12000\n\
 in_memory = 1\n\
-initial_capacity = 2000000\n\
+initial_capacity = 50000000\n\
 default_probability = 0.005\n\
 probability_reduction = 0.8\n\
 data_dir = /tmp/test\n\
@@ -114,7 +114,7 @@ log_level = INFO\n";
     fail_unless(config.udp_port == 10001);
     fail_unless(strcmp(config.data_dir, "/tmp/test") == 0);
     fail_unless(strcmp(config.log_level, "INFO") == 0);
-    fail_unless(config.initial_capacity == 2000000);
+    fail_unless(config.initial_capacity == 50000000);
     fail_unless(config.default_probability == 0.005);
     fail_unless(config.scale_size == 2);
     fail_unless(config.probability_reduction == 0.8);
@@ -349,13 +349,13 @@ probability_reduction = 0.8\n";
     fail_unless(res == 0);
 
     // Should get the config
-    fail_unless(config.initial_capacity == 2000000);
+    fail_unless(config.initial_capacity == 50000000);
     fail_unless(config.default_probability == 0.005);
     fail_unless(config.scale_size == 2);
     fail_unless(config.probability_reduction == 0.8);
     fail_unless(config.size == 256);
-    fail_unless(config.capacity == 4000000);
-    fail_unless(config.bytes == 999999);
+    fail_unless(config.capacity == 100000000);
+    fail_unless(config.bytes == 99999999);
 
     unlink("/tmp/filter_basic_config");
 }
@@ -364,13 +364,13 @@ END_TEST
 START_TEST(test_update_filename_from_filter_config)
 {
     bloom_filter_config config;
-    config.initial_capacity = 2000000;
+    config.initial_capacity = 20000000;
     config.default_probability = 0.005;
     config.scale_size = 2;
     config.probability_reduction = 0.8;
     config.size = 256;
-    config.capacity = 4000000;
-    config.bytes = 999999;
+    config.capacity = 40000000;
+    config.bytes = 9999999;
     config.in_memory = 0;
 
     int res = update_filename_from_filter_config("/tmp/update_filter", &config);
@@ -383,13 +383,13 @@ START_TEST(test_update_filename_from_filter_config)
     res = filter_config_from_filename("/tmp/update_filter", &config2);
     fail_unless(res == 0);
 
-    fail_unless(config2.initial_capacity == 2000000);
+    fail_unless(config2.initial_capacity == 20000000);
     fail_unless(config2.default_probability == 0.005);
     fail_unless(config2.scale_size == 2);
     fail_unless(config2.probability_reduction == 0.8);
     fail_unless(config2.size == 256);
-    fail_unless(config2.capacity == 4000000);
-    fail_unless(config2.bytes == 999999);
+    fail_unless(config2.capacity == 40000000);
+    fail_unless(config2.bytes == 9999999);
     fail_unless(config2.in_memory == 0);
 
     unlink("/tmp/update_filter");
