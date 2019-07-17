@@ -16,13 +16,13 @@
  * to grow quickly.
  */
 static const bloom_config DEFAULT_CONFIG = {
-    8673,               // TCP defaults to 8673
-    8674,               // UDP on 8674
+    22022,               // TCP defaults to 22022
+    22023,               // UDP on 22023
     "0.0.0.0",          // Listen on all IPv4 addresses
-    "/tmp/bloomd",      // Tmp data dir, until configured
+    "/data/bloomd",      // Tmp data dir, until configured
     "DEBUG",            // DEBUG level
     LOG_DEBUG,
-    100000,             // 100K items by default.
+    100000000,             // 100M items by default.
     1e-4,               // Default 1/10K probability.
     4,                  // Scale 4x, SBF_DEFAULT_PARAMS
     0.9,                // SBF_DEFAULT_PARAMS reduction
