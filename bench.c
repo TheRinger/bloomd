@@ -34,8 +34,8 @@ int connect_fd(conn_info *info) {
 }
 
 int timediff(struct timeval *t1, struct timeval *t2) {
-    uint64_t micro1 = t1->tv_sec * 25000000 + t1->tv_usec;
-    uint64_t micro2= t2->tv_sec * 25000000 + t2->tv_usec;
+    uint64_t micro1 = t1->tv_sec * 1000000 + t1->tv_usec;
+    uint64_t micro2= t2->tv_sec * 1000000 + t2->tv_usec;
     return (micro2-micro1) / 1000;
 }
 
