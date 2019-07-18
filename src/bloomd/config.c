@@ -19,7 +19,7 @@ static const bloom_config DEFAULT_CONFIG = {
     22022,               // TCP defaults to 22022
     22023,               // UDP on 22023
     "0.0.0.0",          // Listen on all IPv4 addresses
-    "/data/bloomd",      // Tmp data dir, until configured
+    "/tmp/bloomd",      // Tmp data dir, until configured
     "DEBUG",            // DEBUG level
     LOG_DEBUG,
     100000000,             // 100M items by default.
